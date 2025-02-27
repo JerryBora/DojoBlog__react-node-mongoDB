@@ -1,0 +1,45 @@
+:root {
+  /* Primary Colors */
+  --primary-color: #f1356d;
+  --primary-hover: #e31b5a;
+  --primary-light: #ff8fb3;
+  --primary-bg: #fff5f8;
+
+  /* Text Colors */
+  --text-primary: #333;
+  --text-secondary: #666;
+
+  /* Background Colors */
+  --bg-primary: #f5f5f5;
+  --bg-secondary: #ffffff;
+  --bg-gradient: linear-gradient(135deg, var(--primary-bg) 0%, var(--bg-secondary) 100%);
+  --bg-gradient-accent: linear-gradient(45deg, var(--primary-color), var(--primary-light));
+
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.05);
+  --shadow-lg: 0 10px 25px rgba(0,0,0,0.05);
+
+  /* Border Radius */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 15px;
+
+  /* Transitions */
+  --transition: all 0.3s ease;
+
+  /* Overlay Colors */
+  --overlay-light: rgba(241, 53, 109, 0.1);
+  --overlay-medium: rgba(255, 143, 179, 0.1);
+}
+
+/* Dark Mode Overrides */
+body.dark-mode {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  --primary-bg: #2d1f24;
+  --overlay-light: rgba(241, 53, 109, 0.05);
+  --overlay-medium: rgba(255, 143, 179, 0.05);
+}

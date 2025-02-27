@@ -1,0 +1,49 @@
+.theme-toggle {
+  background: none;
+  border: 2px solid #6e4555ff;
+  color: #6e4555ff;
+  padding: 0.6rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  background: #fcd5ceff;
+  color: #3a3238ff;
+  border-color: #3a3238ff;
+  box-shadow: 0 2px 8px rgba(110, 69, 85, 0.2);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+.dark-mode .theme-toggle {
+  border-color: #f8edebff;
+  color: #f8edebff;
+  background: rgba(248, 237, 235, 0.05);
+}
+
+.dark-mode .theme-toggle:hover {
+  background: rgba(248, 237, 235, 0.1);
+  box-shadow: 0 2px 8px rgba(248, 237, 235, 0.1);
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.theme-toggle:hover > * {
+  animation: rotate 0.5s ease-in-out;
+}
