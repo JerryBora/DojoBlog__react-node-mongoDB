@@ -1,38 +1,59 @@
 import express from "express";
-import Post from "../models/Post.js";
+import { getAllPosts, createPost, getPostById, updatePost, deletePost } from "../controllers/postController.js";
+import { authenticateToken } from "../middleware/auth.js";
+import { validate, postValidation } from "../middleware/validation.js";
+import { apiLimiter } from "../middleware/rateLimiter.js";
 
 const router = express.Router();
 
-// GET all posts
-router.get("/", async (req, res) => {
-  try {
-    const posts = await Post.find();
-    res.json(posts);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// Apply rate limiting to post routes
+router.use(apiLimiter);
 
-// CREATE a post
-router.post("/", async (req, res) => {
-  const { title, content, image } = req.body;
-  try {
-    const newPost = new Post({ title, content, image });
-    await newPost.save();
-    res.status(201).json(newPost);
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
+/**
+ * @route GET /api/posts
+ * @desc Get all posts or filter by userId
+ * @access Public
+ */
+router.get("/", validate(postValidation.getByUser), getAllPosts);
 
-// DELETE a post
-router.delete("/:id", async (req, res) => {
-  try {
-    await Post.findByIdAndDelete(req.params.id);
-    res.json({ message: "Post deleted" });
-  } catch (err) {
-    res.status(400).json({ error: err.message });
-  }
-});
+/**
+ * @route POST /api/posts
+ * @desc Create a new post
+ * @access Private
+ */
+router.post("/", 
+  authenticateToken, 
+  validate(postValidation.create), 
+  createPost
+);
+
+/**
+ * @route GET /api/posts/:id
+ * @desc Get a post by ID
+ * @access Public
+ */
+router.get("/:id", validate(postValidation.getById), getPostById);
+
+/**
+ * @route PUT /api/posts/:id
+ * @desc Update a post
+ * @access Private
+ */
+router.put("/:id", 
+  authenticateToken, 
+  validate(postValidation.getById), 
+  updatePost
+);
+
+/**
+ * @route DELETE /api/posts/:id
+ * @desc Delete a post
+ * @access Private
+ */
+router.delete("/:id", 
+  authenticateToken, 
+  validate(postValidation.delete), 
+  deletePost
+);
 
 export default router;

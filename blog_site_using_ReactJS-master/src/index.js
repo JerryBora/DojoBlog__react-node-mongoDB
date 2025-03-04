@@ -8,6 +8,7 @@ import './styles/forms.css';
 import './styles/themeToggle.css';
 import './styles/landing.css';
 import './styles/userProfile.css';
+import './styles/editor.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

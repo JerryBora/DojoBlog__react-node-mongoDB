@@ -1,0 +1,121 @@
+.auth-container {
+  max-width: 450px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #f8edebff; /* seashell */
+  border-radius: 12px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.auth-header h2 {
+  font-size: 2.2em;
+  color: #6e4555ff; /* eggplant */
+  font-weight: 700;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.auth-header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: #fcd5ceff; /* pale dogwood */
+  border-radius: 2px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-form .error {
+  color: #dc3545;
+  background: rgba(220, 53, 69, 0.1);
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.auth-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-form .form-group {
+  position: relative;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #fcd5ceff; /* pale dogwood */
+  border-radius: 8px;
+  font-size: 1em;
+  background-color: #fff;
+  transition: all 0.3s ease;
+}
+
+.auth-form input:focus {
+  border-color: #6e4555ff; /* eggplant */
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(110, 69, 85, 0.2);
+}
+
+.auth-form input::placeholder {
+  color: #999;
+}
+
+.auth-form button {
+  padding: 15px;
+  background: #6e4555ff; /* eggplant */
+  color: #f8edebff; /* seashell */
+  border: none;
+  border-radius: 25px;
+  font-size: 1.1em;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.auth-form button:hover:not(:disabled) {
+  background: #3a3238ff; /* jet */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.auth-form button:disabled {
+  background: #b39ba5; /* lighter eggplant */
+  cursor: not-allowed;
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.9em;
+  color: #3a3238ff; /* jet */
+}
+
+.auth-footer a {
+  color: #6e4555ff; /* eggplant */
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.auth-footer a:hover {
+  color: #3a3238ff; /* jet */
+  text-decoration: underline;
+}

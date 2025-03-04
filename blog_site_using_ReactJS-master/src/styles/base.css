@@ -28,7 +28,7 @@ body {
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%238B6E64' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 19l7-7 3 3-7 7-3-3z'%3E%3C/path%3E%3Cpath d='M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z'%3E%3C/path%3E%3Cpath d='M2 2l7.586 7.586'%3E%3C/path%3E%3Cpath d='M11 11l-4 4'%3E%3C/path%3E%3C/svg%3E") 0 0, auto;
 }
 
-a, button, input[type='submit'], .btn, .expand-btn, .delete-btn, .theme-toggle, .avatar, .form-label, .form-input, .form-textarea {
+a, button, input[type='submit'], .btn, .expand-btn, .delete-btn, .theme-toggle, .avatar, .form-label, .form-input, .form-textarea, .form-label-content {
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%238B6E64' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 19l7-7 3 3-7 7-3-3z'%3E%3C/path%3E%3Cpath d='M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z'%3E%3C/path%3E%3Cpath d='M2 2l7.586 7.586'%3E%3C/path%3E%3Cpath d='M11 11l-4 4'%3E%3C/path%3E%3C/svg%3E") 0 0, auto !important;
 }
 

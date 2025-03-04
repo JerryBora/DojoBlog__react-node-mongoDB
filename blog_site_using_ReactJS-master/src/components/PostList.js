@@ -1,5 +1,7 @@
-import React from 'react';
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
+import { postAPI } from '../services/api';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
 
 const PostList = ({ showDelete = false }) => {
   const [posts, setPosts] = useState([]);
@@ -9,39 +11,29 @@ const PostList = ({ showDelete = false }) => {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`/api/posts/${id}`, {
-        method: 'DELETE'
-      });
-      
-      if (!response.ok) {
-        throw new Error('Failed to delete post');
-      }
-
+      await postAPI.deletePost(id);
       setPosts(posts.filter(post => post._id !== id));
     } catch (err) {
-      setError(err.message);
+      setError(err.message || 'Failed to delete post');
     }
   };
 
   useEffect(() => {
-    fetch("/api/posts")
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Failed to fetch posts");
-        }
-        return response.json();
-      })
-      .then(data => {
+    const fetchPosts = async () => {
+      try {
+        const data = await postAPI.getAllPosts();
         const sortedPosts = data.sort((a, b) => 
           new Date(b.createdAt) - new Date(a.createdAt)
         );
         setPosts(sortedPosts);
+      } catch (err) {
+        setError(err.message || 'Failed to fetch posts');
+      } finally {
         setIsLoading(false);
-      })
-      .catch(err => {
-        setError(err.message);
-        setIsLoading(false);
-      });
+      }
+    };
+
+    fetchPosts();
   }, []);
 
   const toggleExpand = (postId) => {
@@ -75,37 +67,44 @@ const PostList = ({ showDelete = false }) => {
 
   return (
     <div className="posts-container">
-      {posts.map(post => (
-        <div className="post-card" key={post._id}>
-          <div className="post-header">
-            <h2 className="post-title">{post.title}</h2>
+      {posts.length === 0 ? (
+        <div className="no-posts">No posts found</div>
+      ) : (
+        posts.map(post => (
+          <div className="post-card" key={post._id}>
+            <div className="post-header">
+              <h2 className="post-title">{post.title}</h2>
+            </div>
+            <div className="post-content">
+              <div 
+                className="preview-content"
+                dangerouslySetInnerHTML={{ 
+                  __html: DOMPurify.sanitize(marked.parse(expandedPosts[post._id] ? post.content : truncateText(post.content)))
+                }}
+              />
+              {post.content && post.content.length > 200 && (
+                <button 
+                  className="expand-btn" 
+                  onClick={() => toggleExpand(post._id)}
+                >
+                  {expandedPosts[post._id] ? 'Show Less' : 'Read More'}
+                </button>
+              )}
+            </div>
+            <div className="post-meta">
+              <span>{new Date(post.createdAt).toLocaleDateString()}</span>
+              {showDelete && (
+                <button 
+                  className="delete-btn" 
+                  onClick={() => handleDelete(post._id)}
+                >
+                  Delete
+                </button>
+              )}
+            </div>
           </div>
-          <div className="post-content">
-            <p>
-              {expandedPosts[post._id] ? post.content : truncateText(post.content)}
-            </p>
-            {post.content && post.content.length > 200 && (
-              <button 
-                className="expand-btn" 
-                onClick={() => toggleExpand(post._id)}
-              >
-                {expandedPosts[post._id] ? 'Show Less' : 'Read More'}
-              </button>
-            )}
-          </div>
-          <div className="post-meta">
-            <span>{new Date(post.createdAt).toLocaleDateString()}</span>
-            {showDelete && (
-              <button 
-                className="delete-btn" 
-                onClick={() => handleDelete(post._id)}
-              >
-                Delete
-              </button>
-            )}
-          </div>
-        </div>
-      ))}
+        ))
+      )}
     </div>
   );
 };

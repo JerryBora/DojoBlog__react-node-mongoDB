@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
 import '../styles/userProfile.css';
+import { userAPI, postAPI } from '../services/api';
 
 
 const UserProfile = () => {
@@ -17,95 +18,107 @@ const UserProfile = () => {
     }
   });
   
-  useEffect(() => {
-    if (!user || !user._id) {
+  const { getToken } = useAuth();
+  
+  const fetchProfile = useCallback(async () => {
+    if (!user || !user._id) return;
+    
+    try {
+      setLoading(true);
+      const profileData = await userAPI.getUserProfile(user._id);
+      setProfile(profileData);
+    } catch (error) {
+      console.error('Error fetching profile:', error.message);
+    } finally {
       setLoading(false);
-      return;
     }
+  }, [user, getToken]);
   
-    const fetchProfile = async () => {
-      try {
-        console.log('Fetching profile for user ID:', user._id); // Debug log
-        const response = await fetch(`http://localhost:5000/api/users/${user._id}/profile`, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            'Content-Type': 'application/json'
-          }
-        });
-        
-        if (response.ok) {
-          const profileData = await response.json();
-          console.log('Profile data received:', profileData); // Debug log
-          setProfile(profileData);
-        } else {
-          const errorText = await response.text();
-          console.error('Failed to fetch profile:', errorText);
-        }
-      } catch (error) {
-        console.error('Error fetching profile:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-  
+  useEffect(() => {
     fetchProfile();
-  }, [user]);
+  }, [fetchProfile]);
+  
+  const [updateError, setUpdateError] = useState('');
+  const [isUpdating, setIsUpdating] = useState(false);
   
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
     if (!user || !user._id) {
-      alert('User ID is missing. Please log in again.');
+      setUpdateError('User ID is missing. Please log in again.');
       return;
     }
   
     try {
-      console.log('Updating profile for user ID:', user._id); // Debug log
-      const response = await fetch(`http://localhost:5000/api/users/${user._id}/profile`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        },
-        body: JSON.stringify({
-          bio: profile.bio,
-          socialLinks: profile.socialLinks
-        })
-      });
-    
-      if (response.ok) {
-        const updatedProfile = await response.json();
-        console.log('Profile updated successfully:', updatedProfile); // Debug log
-        setProfile(updatedProfile);
-        setIsEditing(false);
-        alert('Profile updated successfully!');
-      } else {
-        const errorText = await response.text();
-        console.error('Failed to update profile:', errorText);
-        alert(`Failed to update profile: ${errorText}`);
-      }
+      setIsUpdating(true);
+      setUpdateError('');
+      
+      const profileData = {
+        bio: profile.bio,
+        socialLinks: profile.socialLinks
+      };
+      
+      const updatedProfile = await userAPI.updateProfile(user._id, profileData);
+      setProfile(updatedProfile);
+      setIsEditing(false);
     } catch (error) {
-      console.error('Error updating profile:', error);
-      alert('An error occurred while updating the profile. Please try again.');
+      console.error('Error updating profile:', error.message);
+      setUpdateError(error.message || 'An error occurred while updating the profile');
+    } finally {
+      setIsUpdating(false);
     }
   };
   
-  const fetchUserPosts = async () => {
+  const handleDeletePost = async (postId) => {
+    if (!window.confirm('Are you sure you want to delete this post?')) {
+      return;
+    }
+    
     try {
-      const response = await fetch(`http://localhost:5000/api/posts?userId=${user._id}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch posts');
-      }
-      const data = await response.json();
-      setUserPosts(Array.isArray(data) ? data : []);
+      setPostsLoading(true);
+      await postAPI.deletePost(postId);
+      // Update the posts list by filtering out the deleted post
+      setUserPosts(userPosts.filter(post => post._id !== postId));
     } catch (error) {
-      console.error('Error fetching user posts:', error);
+      console.error('Error deleting post:', error.message);
+      setPostsError('Failed to delete post: ' + error.message);
+    } finally {
+      setPostsLoading(false);
+    }
+  };
+  
+  const [postsLoading, setPostsLoading] = useState(false);
+  const [postsError, setPostsError] = useState('');
+
+  const fetchUserPosts = useCallback(async () => {
+    if (!user || !user._id) return;
+    
+    try {
+      setPostsLoading(true);
+      setPostsError('');
+      
+      const data = await postAPI.getUserPosts(user._id);
+      console.log('User posts API response:', data); // Debug log to see the actual response
+      
+      // The backend always returns data with a 'posts' property
+      if (data && data.posts && Array.isArray(data.posts)) {
+        setUserPosts(data.posts);
+      } else {
+        console.error('Unexpected posts data format:', data);
+        setUserPosts([]);
+      }
+    } catch (error) {
+      console.error('Error fetching user posts:', error.message);
+      setPostsError(error.message);
       setUserPosts([]);
     } finally {
-      setLoading(false);
+      setPostsLoading(false);
     }
-  };
+  }, [user, getToken]);
   
-  fetchUserPosts();
+  useEffect(() => {
+    fetchUserPosts();
+  }, [fetchUserPosts]);
+  
   if (!user) {
     return <div>Please log in to view your profile.</div>;
   }
@@ -118,28 +131,31 @@ const UserProfile = () => {
     <div className="profile-container">
       <div className="profile-header">
         <div className="profile-info">
-          <div className="custom-avatar large">{user.username[0].toUpperCase()}</div>
-          <h2>{user.username}</h2>
+          <div className="custom-avatar large">{user.username ? user.username[0].toUpperCase() : user.email[0].toUpperCase()}</div>
+          <h2>{user.username || user.email}</h2>
         </div>
         {!isEditing ? (
-          <button className="btn secondary" onClick={() => setIsEditing(true)}>
+          <button className="btn secondary" onClick={() => setIsEditing(true)} disabled={loading}>
             Edit Profile
           </button>
         ) : (
-          <button className="btn primary" onClick={handleProfileUpdate}>
-            Save Changes
+          <button className="btn primary" onClick={handleProfileUpdate} disabled={isUpdating}>
+            {isUpdating ? 'Saving...' : 'Save Changes'}
           </button>
         )}
       </div>
   
+      {updateError && <div className="error-message">{updateError}</div>}
+      
       {isEditing ? (
-        <form className="profile-form">
+        <form className="profile-form" onSubmit={handleProfileUpdate}>
           <div className="form-group">
             <label>Bio</label>
             <textarea
-              value={profile.bio}
+              value={profile.bio || ''}
               onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
               placeholder="Tell us about yourself"
+              disabled={isUpdating}
             />
           </div>
           <div className="form-group">
@@ -147,29 +163,32 @@ const UserProfile = () => {
             <input
               type="url"
               placeholder="Twitter URL"
-              value={profile.socialLinks.twitter}
+              value={(profile.socialLinks && profile.socialLinks.twitter) || ''}
               onChange={(e) => setProfile({
                 ...profile,
                 socialLinks: { ...profile.socialLinks, twitter: e.target.value }
               })}
+              disabled={isUpdating}
             />
             <input
               type="url"
               placeholder="GitHub URL"
-              value={profile.socialLinks.github}
+              value={(profile.socialLinks && profile.socialLinks.github) || ''}
               onChange={(e) => setProfile({
                 ...profile,
                 socialLinks: { ...profile.socialLinks, github: e.target.value }
               })}
+              disabled={isUpdating}
             />
             <input
               type="url"
               placeholder="LinkedIn URL"
-              value={profile.socialLinks.linkedin}
+              value={(profile.socialLinks && profile.socialLinks.linkedin) || ''}
               onChange={(e) => setProfile({
                 ...profile,
                 socialLinks: { ...profile.socialLinks, linkedin: e.target.value }
               })}
+              disabled={isUpdating}
             />
           </div>
         </form>
@@ -177,7 +196,7 @@ const UserProfile = () => {
         <div className="profile-content">
           <p className="bio">{profile.bio || 'No bio yet'}</p>
           <div className="social-links">
-            {Object.entries(profile.socialLinks).map(([platform, url]) => (
+            {profile.socialLinks && Object.entries(profile.socialLinks).map(([platform, url]) => (
               url && (
                 <a key={platform} href={url} target="_blank" rel="noopener noreferrer">
                   {platform}
@@ -190,24 +209,45 @@ const UserProfile = () => {
   
       <div className="user-posts">
         <h3>My Posts</h3>
-        <div className="posts-grid">
-          {Array.isArray(userPosts) && userPosts.length > 0 ? (
-            userPosts.map(post => (
-              <div key={post._id} className="post-card">
-                <h3>{post.title}</h3>
-                <p>{post.content.substring(0, 150)}...</p>
-                <span className="post-date">
-                  {new Date(post.createdAt).toLocaleDateString()}
-                </span>
-              </div>
-            ))
-          ) : (
-            <p>No posts yet</p>
-          )}
-        </div>
+        {postsError && <div className="error-message">{postsError}</div>}
+        {postsLoading ? (
+          <div className="loading">Loading posts...</div>
+        ) : (
+          <div className="posts-grid">
+            {userPosts && userPosts.length > 0 ? (
+              userPosts.map(post => (
+                <div key={post._id} className="post-card">
+                  <h3 className="post-title">{post.title}</h3>
+                  <div className="post-content">
+                    <p>{post.content.substring(0, 100)}{post.content.length > 100 ? '...' : ''}</p>
+                  </div>
+                  <div className="post-meta">
+                    <span className="post-date">
+                      {new Date(post.createdAt).toLocaleDateString()}
+                    </span>
+                    <button 
+                      className="delete-btn" 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeletePost(post._id);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No posts yet</p>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
+
+
+
 };
 
 export default UserProfile;

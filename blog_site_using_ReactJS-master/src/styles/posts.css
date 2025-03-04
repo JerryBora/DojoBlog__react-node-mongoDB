@@ -2,6 +2,9 @@
   max-width: 1200px;
   margin: auto;
   padding: 1.5rem;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(110, 69, 85, 0.08);
 }
 
 .home-header {
@@ -9,6 +12,8 @@
   justify-content: space-between;
   align-items: center;
   margin-top: 2rem;
+  padding: 0 1.5rem 1rem;
+  border-bottom: 2px solid rgba(252, 213, 206, 0.5);
 }
 
 .home-header h2 {
@@ -42,6 +47,7 @@
   margin-bottom: 1.5rem;
   transition: all 0.2s ease;
   border: 1px solid rgba(110, 69, 85, 0.1);
+  overflow: hidden;
 }
 
 .post-card:hover {
@@ -54,6 +60,15 @@
   justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(252, 213, 206, 0.7);
+}
+
+.post-title {
+  color: #6e4555ff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
 }
 
 .post-content {
@@ -61,10 +76,84 @@
   margin: 1.5rem 0;
 }
 
-.post-content p {
-  line-height: 1.6;
+/* Styling for post content elements */
+.post-content .preview-content {
   color: #3a3238ff;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.post-content .preview-content p {
   margin-bottom: 1rem;
+  line-height: 1.6;
+}
+
+.post-content .preview-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin: 1rem 0;
+  box-shadow: 0 2px 8px rgba(110, 69, 85, 0.1);
+}
+
+.post-content .preview-content blockquote {
+  border-left: 4px solid #fcd5ceff;
+  padding-left: 1rem;
+  margin-left: 0;
+  color: #6e4555ff;
+  font-style: italic;
+}
+
+.post-content .preview-content code {
+  background: rgba(110, 69, 85, 0.1);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.9em;
+}
+
+.post-content .preview-content pre {
+  background: rgba(110, 69, 85, 0.05);
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.post-content .preview-content pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
+.post-content .preview-content ul,
+.post-content .preview-content ol {
+  padding-left: 2rem;
+  margin: 1rem 0;
+}
+
+.post-content .preview-content h1,
+.post-content .preview-content h2,
+.post-content .preview-content h3,
+.post-content .preview-content h4,
+.post-content .preview-content h5,
+.post-content .preview-content h6 {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+  color: #6e4555ff;
+  font-weight: 600;
+}
+
+.post-content .preview-content a {
+  color: #6e4555ff;
+  text-decoration: underline;
+  text-decoration-color: #fcd5ceff;
+  text-underline-offset: 2px;
+  transition: all 0.2s ease;
+}
+
+.post-content .preview-content a:hover {
+  text-decoration-color: #6e4555ff;
 }
 
 .expand-btn {
