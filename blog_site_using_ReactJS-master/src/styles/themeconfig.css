@@ -31,6 +31,12 @@
   /* Overlay Colors */
   --overlay-light: rgba(241, 53, 109, 0.1);
   --overlay-medium: rgba(255, 143, 179, 0.1);
+  
+  /* Blog Theme Colors */
+  --eggplant: #6e4555ff;
+  --pale-dogwood: #fcd5ceff;
+  --seashell: #f8edebff;
+  --dark-liver: #3a3238ff;
 }
 
 /* Dark Mode Overrides */
@@ -42,4 +48,8 @@ body.dark-mode {
   --primary-bg: #2d1f24;
   --overlay-light: rgba(241, 53, 109, 0.05);
   --overlay-medium: rgba(255, 143, 179, 0.05);
+  --eggplant: #a67d8eff;
+  --pale-dogwood: #6d4c5aff;
+  --seashell: #2d2d2d;
+  --dark-liver: #cccccc;
 }

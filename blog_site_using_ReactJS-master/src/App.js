@@ -12,6 +12,7 @@ import { AuthProvider } from './context/AuthContext';
 import { ThemeProvider } from './context/ThemeContext';
 import UserProfile from './components/UserProfile';
 import Background from './components/Background';
+import BlogPost from './components/BlogPost';
 function App() {
   return (
     <AuthProvider>
@@ -23,11 +24,12 @@ function App() {
             <Route exact path="/">
               <Landing />
             </Route>
-            <Route path={["/blogs", "/login", "/signup", "/create", "/profile"]}>
+            <Route path={["/blogs", "/login", "/signup", "/create", "/profile", "/blogs/:id"]}>
               <Navbar />
               <div className="content content-restricted">
                 <Switch>
-                  <Route path="/blogs" component={Home} />
+                  <Route exact path="/blogs" component={Home} />
+                  <Route path="/blogs/:id" component={BlogPost} />
                   <Route path="/login" component={Login} />
                   <Route path="/signup" component={Signup} />
                   <Route path="/create" component={PostForm} />

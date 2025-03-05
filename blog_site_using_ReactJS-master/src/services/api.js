@@ -161,4 +161,15 @@ export const postAPI = {
       throw new Error('Failed to delete post');
     }
   },
+
+  getPostById: async (postId) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/posts/${postId}`, {
+        headers: createHeaders(),
+      });
+      return handleResponse(response);
+    } catch (error) {
+      throw new Error('Failed to fetch post details');
+    }
+  },
 };

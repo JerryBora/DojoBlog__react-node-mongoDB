@@ -4,6 +4,7 @@ import '../styles/userProfile.css';
 import { userAPI, postAPI } from '../services/api';
 
 
+
 const UserProfile = () => {
   const { user } = useAuth();
   const [userPosts, setUserPosts] = useState([]);
@@ -85,6 +86,8 @@ const UserProfile = () => {
       setPostsLoading(false);
     }
   };
+  
+  
   
   const [postsLoading, setPostsLoading] = useState(false);
   const [postsError, setPostsError] = useState('');
@@ -218,23 +221,15 @@ const UserProfile = () => {
               userPosts.map(post => (
                 <div key={post._id} className="post-card">
                   <h3 className="post-title">{post.title}</h3>
-                  <div className="post-content">
-                    <p>{post.content.substring(0, 100)}{post.content.length > 100 ? '...' : ''}</p>
-                  </div>
-                  <div className="post-meta">
-                    <span className="post-date">
-                      {new Date(post.createdAt).toLocaleDateString()}
-                    </span>
-                    <button 
-                      className="delete-btn" 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeletePost(post._id);
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </div>
+                  <button 
+                    className="delete-btn" 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeletePost(post._id);
+                    }}
+                  >
+                    Delete
+                  </button>
                 </div>
               ))
             ) : (

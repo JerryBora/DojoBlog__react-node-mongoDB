@@ -1,4 +1,5 @@
 import Post from '../models/Post.js';
+import User from '../models/User.js';
 import { asyncHandler } from '../utils/responseHandler.js';
 import { sendSuccess, sendError } from '../utils/responseHandler.js';
 
@@ -12,10 +13,20 @@ export const getAllPosts = asyncHandler(async (req, res) => {
   // Filter by user if userId is provided
   const filter = userId ? { userId } : {};
   
-  // Sort by creation date (newest first)
+  // Sort by creation date (newest first) and populate user information
   const posts = await Post.find(filter).sort({ createdAt: -1 });
   
-  return sendSuccess(res, 200, 'Posts retrieved successfully', posts);
+  // Fetch author information for each post
+  const postsWithAuthor = await Promise.all(posts.map(async (post) => {
+    const postObj = post.toObject();
+    const author = await User.findById(post.userId).select('username');
+    return {
+      ...postObj,
+      author: author ? { username: author.username } : { username: 'Unknown' }
+    };
+  }));
+  
+  return sendSuccess(res, 200, 'Posts retrieved successfully', postsWithAuthor);
 });
 
 /**
@@ -48,7 +59,14 @@ export const getPostById = asyncHandler(async (req, res) => {
     return sendError(res, 404, 'Post not found');
   }
   
-  return sendSuccess(res, 200, 'Post retrieved successfully', post);
+  // Get author information
+  const author = await User.findById(post.userId).select('username');
+  const postWithAuthor = {
+    ...post.toObject(),
+    author: author ? { username: author.username } : { username: 'Unknown' }
+  };
+  
+  return sendSuccess(res, 200, 'Post retrieved successfully', postWithAuthor);
 });
 
 /**

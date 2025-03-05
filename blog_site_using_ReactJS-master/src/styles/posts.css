@@ -1,192 +1,183 @@
 .posts-container {
   max-width: 1200px;
-  margin: auto;
+  margin: 0 auto;
   padding: 1.5rem;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(110, 69, 85, 0.08);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  min-height: 10vh;
+  overflow: visible;
+  display: grid;
+  gap: 2rem;
+}
+
+.home {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
 }
 
 .home-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 2rem;
+  margin-bottom: 2rem;
   padding: 0 1.5rem 1rem;
   border-bottom: 2px solid rgba(252, 213, 206, 0.5);
 }
 
 .home-header h2 {
   font-size: 2rem;
-  color: #6e4555ff;
+  color: var(--text-primary);
   font-weight: 600;
   margin: 0;
 }
 
 .create-post-btn {
-  background: #6e4555ff;
-  color: #f8edebff;
   padding: 0.75rem 1.5rem;
-  border-radius: 4px;
+  background: var(--eggplant);
+  color: var(--seashell);
+  border-radius: var(--radius-sm);
   text-decoration: none;
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: var(--transition);
   font-size: 0.95rem;
 }
 
 .create-post-btn:hover {
-  background: #3a3238ff;
+  background: var(--eggplant-dark);
   transform: translateY(-1px);
 }
 
 .post-card {
-  background: #f8edebff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(58, 50, 56, 0.1);
-  margin-bottom: 1.5rem;
-  transition: all 0.2s ease;
-  border: 1px solid rgba(110, 69, 85, 0.1);
+  background: var(--bg-primary);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
+  border: 1px solid var(--border-color);
   overflow: hidden;
+  cursor: pointer;
 }
 
 .post-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(58, 50, 56, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .post-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 1.5rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid rgba(252, 213, 206, 0.7);
+  /* margin-bottom: 1rem; */
 }
 
 .post-title {
-  color: #6e4555ff;
   font-size: 1.5rem;
-  font-weight: 600;
+  color: var(--text-primary);
   margin: 0;
+  line-height: 1.4;
+  flex: 1;
+  margin-right: 1rem;
 }
 
-.post-content {
-  position: relative;
-  margin: 1.5rem 0;
-}
-
-/* Styling for post content elements */
-.post-content .preview-content {
-  color: #3a3238ff;
+.post-content-preview {
+  color: var(--text-secondary);
+  line-height: 1.6;
+ 
   font-size: 1rem;
-  line-height: 1.6;
-}
-
-.post-content .preview-content p {
-  margin-bottom: 1rem;
-  line-height: 1.6;
-}
-
-.post-content .preview-content img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  margin: 1rem 0;
-  box-shadow: 0 2px 8px rgba(110, 69, 85, 0.1);
-}
-
-.post-content .preview-content blockquote {
-  border-left: 4px solid #fcd5ceff;
-  padding-left: 1rem;
-  margin-left: 0;
-  color: #6e4555ff;
-  font-style: italic;
-}
-
-.post-content .preview-content code {
-  background: rgba(110, 69, 85, 0.1);
-  padding: 0.2rem 0.4rem;
-  border-radius: 4px;
-  font-family: monospace;
-  font-size: 0.9em;
-}
-
-.post-content .preview-content pre {
-  background: rgba(110, 69, 85, 0.05);
-  padding: 1rem;
-  border-radius: 8px;
-  overflow-x: auto;
-  margin: 1rem 0;
-}
-
-.post-content .preview-content pre code {
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
-}
-
-.post-content .preview-content ul,
-.post-content .preview-content ol {
-  padding-left: 2rem;
-  margin: 1rem 0;
-}
-
-.post-content .preview-content h1,
-.post-content .preview-content h2,
-.post-content .preview-content h3,
-.post-content .preview-content h4,
-.post-content .preview-content h5,
-.post-content .preview-content h6 {
-  margin-top: 1.5rem;
-  margin-bottom: 1rem;
-  color: #6e4555ff;
-  font-weight: 600;
-}
-
-.post-content .preview-content a {
-  color: #6e4555ff;
-  text-decoration: underline;
-  text-decoration-color: #fcd5ceff;
-  text-underline-offset: 2px;
-  transition: all 0.2s ease;
-}
-
-.post-content .preview-content a:hover {
-  text-decoration-color: #6e4555ff;
-}
-
-.expand-btn {
-  background: none;
-  border: none;
-  color: #6e4555ff;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 0.5rem 0;
-  transition: all 0.2s ease;
-}
-
-.expand-btn:hover {
-  color: #3a3238ff;
-  text-decoration: underline;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: pre-wrap;
 }
 
 .post-meta {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid #fcd5ceff;
-  color: #6e4555ff;
+  border-top: 1px solid var(--border-color);
+}
+
+.post-info {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
+.post-date, .post-author {
+  color: var(--text-secondary);
+}
+
+.post-author {
+  font-weight: 500;
+}
+
+.delete-btn {
+  padding: 0.5rem 1rem;
+  background-color: var(--danger-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: var(--danger-color-dark);
+}
+
+.open-new-window-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.open-new-window-btn:hover {
+  color: var(--primary-color);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.expand-btn {
+  background: none;
+  border: none;
+  color: var(--eggplant);
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  transition: var(--transition);
+}
+
+.expand-btn:hover {
+  color: var(--eggplant-dark);
+  text-decoration: underline;
+}
+
 .loading-container,
-.error-container {
+.error-container,
+.no-posts {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 200px;
-  color: #6e4555ff;
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-secondary);
+}
+
+.error {
+  color: var(--danger-color);
 }
