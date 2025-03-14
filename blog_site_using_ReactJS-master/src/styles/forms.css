@@ -213,11 +213,24 @@
   cursor: pointer;
   white-space: nowrap;
   min-width: 120px;
-  text-align: center;}
+  text-align: center;
+}
+
+.dark-mode .submit-button {
+  background: var(--pale-dogwood);
+  color: var(--eggplant-dark);
+}
+
 .submit-button:hover:not(:disabled) {
   background: var(--jet);
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);}
+  box-shadow: var(--shadow-md);
+}
+
+.dark-mode .submit-button:hover:not(:disabled) {
+  background: var(--seashell);
+  color: var(--eggplant);
+}
 .error-message {
   color: var(--eggplant);
   background: rgba(110, 69, 85, 0.1);
@@ -396,6 +409,21 @@
   font-size: 1rem;
   line-height: 0.5;
   transition: border-color 0.2s ease;
+}
+
+.dark-mode .form-input {
+  background: var(--eggplant-dark);
+  border-color: var(--pale-dogwood);
+  color: var(--seashell);
+}
+
+.auth-form input:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+.dark-mode .auth-form input:focus {
+  border-color: var(--pale-dogwood);
 }
 .form-textarea {
   flex: 1;

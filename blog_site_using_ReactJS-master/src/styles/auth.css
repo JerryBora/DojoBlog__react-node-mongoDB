@@ -7,6 +7,11 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
+body.dark-mode .auth-container {
+  background: #2d2d2d;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
 .auth-header {
   text-align: center;
   margin-bottom: 30px;
@@ -20,6 +25,10 @@
   position: relative;
 }
 
+body.dark-mode .auth-header h2 {
+  color: #a67d8eff;
+}
+
 .auth-header h2::after {
   content: '';
   position: absolute;
@@ -30,6 +39,10 @@
   height: 3px;
   background: #fcd5ceff; /* pale dogwood */
   border-radius: 2px;
+}
+
+body.dark-mode .auth-header h2::after {
+  background: #6d4c5aff;
 }
 
 .auth-form {
@@ -45,6 +58,10 @@
   border-radius: 8px;
   font-weight: 500;
   margin-bottom: 10px;
+}
+
+body.dark-mode .auth-form .error {
+  background: rgba(220, 53, 69, 0.2);
 }
 
 .auth-form form {
@@ -67,14 +84,29 @@
   transition: all 0.3s ease;
 }
 
+body.dark-mode .auth-form input {
+  border-color: #6d4c5aff;
+  background-color: #3a3a3a;
+  color: #cccccc;
+}
+
 .auth-form input:focus {
   border-color: #6e4555ff; /* eggplant */
   outline: none;
   box-shadow: 0 0 0 3px rgba(110, 69, 85, 0.2);
 }
 
+body.dark-mode .auth-form input:focus {
+  border-color: #a67d8eff;
+  box-shadow: 0 0 0 3px rgba(166, 125, 142, 0.2);
+}
+
 .auth-form input::placeholder {
   color: #999;
+}
+
+body.dark-mode .auth-form input::placeholder {
+  color: #777;
 }
 
 .auth-form button {
@@ -90,15 +122,29 @@
   margin-top: 10px;
 }
 
+body.dark-mode .auth-form button {
+  background: #a67d8eff;
+  color: #2d2d2d;
+}
+
 .auth-form button:hover:not(:disabled) {
   background: #3a3238ff; /* jet */
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+body.dark-mode .auth-form button:hover:not(:disabled) {
+  background: #cccccc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
 .auth-form button:disabled {
   background: #b39ba5; /* lighter eggplant */
   cursor: not-allowed;
+}
+
+body.dark-mode .auth-form button:disabled {
+  background: #5a4a54;
 }
 
 .auth-footer {
@@ -108,6 +154,10 @@
   color: #3a3238ff; /* jet */
 }
 
+body.dark-mode .auth-footer {
+  color: #cccccc;
+}
+
 .auth-footer a {
   color: #6e4555ff; /* eggplant */
   text-decoration: none;
@@ -115,7 +165,15 @@
   transition: all 0.3s ease;
 }
 
+body.dark-mode .auth-footer a {
+  color: #a67d8eff;
+}
+
 .auth-footer a:hover {
   color: #3a3238ff; /* jet */
   text-decoration: underline;
+}
+
+body.dark-mode .auth-footer a:hover {
+  color: #cccccc;
 }

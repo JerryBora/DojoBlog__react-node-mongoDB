@@ -12,6 +12,11 @@
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
+.dark-mode .save-indicator-container {
+  background: var(--seashell);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
 .save-indicator-container.saving {
   opacity: 1;
   transform: translateY(0);
@@ -37,6 +42,10 @@
   color: var(--eggplant);
 }
 
+.dark-mode .save-indicator .text-gray-500 {
+  color: var(--dark-liver);
+}
+
 .save-indicator .text-green-500 {
   color: #22c55e;
 }
@@ -56,13 +65,28 @@
   transition: all 0.2s ease;
 }
 
+.dark-mode .preview-toggle {
+  background: var(--dark-liver);
+  color: var(--pale-dogwood);
+}
+
 .preview-toggle:hover {
   background: var(--pale-dogwood);
+}
+
+.dark-mode .preview-toggle:hover {
+  background: var(--eggplant);
+  color: var(--seashell);
 }
 
 .preview-toggle.active {
   background: var(--eggplant);
   color: var(--seashell);
+}
+
+.dark-mode .preview-toggle.active {
+  background: var(--pale-dogwood);
+  color: var(--dark-liver);
 }
 
 .submit-button {
@@ -100,6 +124,10 @@
   margin-right: 12px;
 }
 
+.dark-mode .save-indicator-container {
+  background: var(--dark-liver);
+}
+
 .save-indicator-container.saving {
   opacity: 1;
   transform: translateX(0);
@@ -123,6 +151,10 @@
 
 .save-indicator .text-gray-500 {
   color: var(--eggplant);
+}
+
+.dark-mode .save-indicator .text-gray-500 {
+  color: var(--dark-liver);
 }
 
 .save-indicator .text-green-500 {

@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { useTheme } from '../context/ThemeContext';
 
 const Background = () => {
+  const { isDarkMode } = useTheme();
   const [bubbles, setBubbles] = useState(() => Array.from({ length: 25 }, (_, i) => ({
     id: i,
     x: Math.random() * window.innerWidth,
@@ -70,6 +72,16 @@ const Background = () => {
     };
   }, [updateBubblePosition]);
 
+  // Define theme-specific colors
+  const lightModeBackground = 'linear-gradient(to bottom, rgba(248, 237, 235, 0.8), rgba(252, 213, 206, 0.3))';
+  const darkModeBackground = 'linear-gradient(to bottom, rgba(42, 42, 42, 0.9), rgba(58, 50, 56, 0.7))';
+  
+  const lightModeBubbleGradient = 'radial-gradient(circle at 30% 30%, rgba(252, 213, 206, 0.6), rgba(252, 213, 206, 0.2))';
+  const darkModeBubbleGradient = 'radial-gradient(circle at 30% 30%, rgba(110, 69, 85, 0.4), rgba(58, 50, 56, 0.2))';
+  
+  const lightModeShadow = '0 4px 16px rgba(110, 69, 85, 0.15)';
+  const darkModeShadow = '0 4px 16px rgba(0, 0, 0, 0.3)';
+
   return (
     <div style={{
       position: 'fixed',
@@ -79,7 +91,7 @@ const Background = () => {
       height: '100%',
       zIndex: -1,
       overflow: 'hidden',
-      background: 'linear-gradient(to bottom, rgba(248, 237, 235, 0.8), rgba(252, 213, 206, 0.3))'
+      background: isDarkMode ? darkModeBackground : lightModeBackground
     }}>
       {bubbles.map(bubble => (
         <div
@@ -90,12 +102,12 @@ const Background = () => {
             top: `${bubble.y}px`,
             width: `${bubble.size}px`,
             height: `${bubble.size}px`,
-            background: 'radial-gradient(circle at 30% 30%, rgba(252, 213, 206, 0.6), rgba(252, 213, 206, 0.2))',
+            background: isDarkMode ? darkModeBubbleGradient : lightModeBubbleGradient,
             borderRadius: '50%',
             opacity: bubble.opacity,
             transform: `scale(${1 + Math.sin(Date.now() * 0.001 + bubble.id) * 0.1})`,
             transition: 'opacity 0.3s ease-out',
-            boxShadow: '0 4px 16px rgba(110, 69, 85, 0.15)',
+            boxShadow: isDarkMode ? darkModeShadow : lightModeShadow,
             backdropFilter: 'blur(4px)'
           }}
         />

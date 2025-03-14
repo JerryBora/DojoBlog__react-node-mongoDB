@@ -41,10 +41,10 @@
 
 .profile-form {
   margin-top: 20px;
-  background: #ffffff;
+  background: var(--bg-primary);
   padding: 20px;
   border-radius: var(--radius-md);
-  box-shadow: 0 2px 4px rgba(58, 50, 56, 0.1);
+  box-shadow: var(--shadow-sm);
 }
 
 .custom-avatar:hover {
@@ -52,10 +52,10 @@
 }
 
 .profile-content {
-  background: #ffffff;
+  background: var(--bg-primary);
   padding: 20px;
   border-radius: var(--radius-md);
-  box-shadow: 0 2px 8px rgba(58, 50, 56, 0.1);
+  box-shadow: var(--shadow-md);
   margin-bottom: 30px;
 }
 
@@ -167,51 +167,41 @@
 }
 
 .btn.primary {
-  background: #6e4555ff;
-  color: #f8edebff;
+  background: var(--eggplant);
+  color: var(--seashell);
   border: none;
 }
 
 .btn.secondary {
   background: transparent;
-  color: #f8edebff;
-  border: 2px solid #f8edebff;
+  color: var(--seashell);
+  border: 2px solid var(--seashell);
   display: inline-block;
 }
 
 .btn:hover {
-  background: #3a3238ff;
-  color: #f8edebff;
+  background: var(--eggplant-dark);
+  color: var(--seashell);
   transform: translateY(-1px);
-}
-
-.form-group {
-  margin-bottom: 15px;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: 600;
 }
 
 .form-group input,
 .form-group textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid #fcd5ceff;
+  border: 1px solid var(--pale-dogwood);
   border-radius: var(--radius-md);
   font-size: 1em;
   font-family: inherit;
   transition: border-color 0.3s ease;
-  background: #f8edebff;
+  background: var(--bg-primary);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: #6e4555ff;
+  border-color: var(--eggplant);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(110, 69, 85, 0.1);
+  box-shadow: 0 0 0 3px var(--overlay-light);
 }
 
 .user-posts .delete-btn {
@@ -230,4 +220,29 @@
   background-color: var(--danger-color-dark, #bd2130);
   opacity: 1;
   transform: translateY(-1px);
+}
+
+body.dark-mode .profile-container {
+  background: var(--bg-primary);
+  border-color: var(--pale-dogwood);
+}
+
+body.dark-mode .profile-header {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+body.dark-mode .profile-links a {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--pale-dogwood);
+}
+
+body.dark-mode .profile-links a:hover {
+  background: var(--pale-dogwood);
+  color: var(--text-primary);
+}
+
+body.dark-mode .profile-content {
+  color: var(--text-primary);
 }

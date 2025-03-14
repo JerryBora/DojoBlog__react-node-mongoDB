@@ -5,6 +5,14 @@
   --jet: #3a3238ff;
 }
 
+/* Dark mode variables */
+body.dark-mode .landing {
+  --pale-dogwood: #6d4c5aff;
+  --seashell: #2d2d2d;
+  --eggplant: #a67d8eff;
+  --jet: #cccccc;
+}
+
 .landing {
   min-height: 100vh;
   width: 100%;
@@ -136,6 +144,12 @@
   transition: transform 0.3s ease;
 }
 
+body.dark-mode .feature {
+  background: rgba(58, 50, 56, 0.7);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(58, 50, 56, 0.5);
+}
+
 .feature:hover {
   transform: translateY(-5px);
 }
@@ -150,6 +164,13 @@
   color: var(--jet);
   opacity: 0.8;
   line-height: 1.6;
+}
+
+.landing-theme-toggle {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
 }
 
 @media (max-width: 1024px) {

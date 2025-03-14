@@ -1,9 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import ThemeToggle from './ThemeToggle';
 
 const Landing = () => {
   return (
     <div className="landing">
+      <div className="landing-theme-toggle">
+        <ThemeToggle />
+      </div>
       <div className="landing-content">
         <div className="landing-text">
           <h1>Welcome to The Dojo Blog</h1>
